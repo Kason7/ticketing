@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 const { NatsWrapper } = require('./natsWrapper');
-const { TicketCreatedListener } = require('./events/ticketCreatedListener');
-const { TicketUpdatedListener } = require('./events/ticketUpdatedListener');
-const {
-  ExpirationCompletedListener,
-} = require('./events/expirationCompletedListener');
-const { PaymentCreatedListener } = require('./events/paymentCreatedListener');
+
+// IMPORT LISTENERS
+const { OrderCreatedListener } = require('./events/orderCreatedListener');
+const { OrderCancelledListener } = require('./events/orderCancelledListener');
 
 // CONNECT TO MONGODB
 const start = async () => {
@@ -46,11 +44,9 @@ const start = async () => {
     process.on('SIGINT', () => NatsWrapper.client().close());
     process.on('SIGTERM', () => NatsWrapper.client().close());
 
-    // Activating listeners
-    new TicketCreatedListener(NatsWrapper.client()).listen();
-    new TicketUpdatedListener(NatsWrapper.client()).listen();
-    new ExpirationCompletedListener(NatsWrapper.client()).listen();
-    new PaymentCreatedListener(NatsWrapper.client()).listen();
+    // Activate listeners
+    new OrderCreatedListener(NatsWrapper.client()).listen();
+    new OrderCancelledListener(NatsWrapper.client()).listen();
 
     // Connect to MongoDB
     await mongoose.connect(process.env.MONGO_URI, {
