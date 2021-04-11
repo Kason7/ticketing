@@ -1,21 +1,49 @@
+import useSWR from 'swr'
+import axios from 'axios'
+import Link from 'next/link'
+
+const fetcher = (url) => axios.get(url).then((res) => res.data)
+
 const HomePage = ({ data }) => {
-  const currentUser = data?.currentUser;
-  return currentUser ? (
-    <h1>You are signed in</h1>
-  ) : (
-    <h1>You are not signed in</h1>
-  );
-};
+  const currentUser = data?.currentUser
 
-// export async function getServerSideProps(context) {
-//   const client = buildClient(context);
-//   const { data } = await client.get('/api/users/currentuser');
+  // HANDLERS
+  const { data: tickets, error } = useSWR(
+    'https://ticketing.dev/api/tickets',
+    fetcher,
+  )
 
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// }
+  // RENDERS
+  const ticketList = tickets?.reverse().map(({ id, title, price }) => {
+    return (
+      <tr key={id}>
+        <td>{title}</td>
+        <td>{price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    )
+  })
 
-export default HomePage;
+  // MAIN RENDER
+  return (
+    <div>
+      <h1>Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
+    </div>
+  )
+}
+
+export default HomePage

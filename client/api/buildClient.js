@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export const buildClient = ({ req }) => {
   const isServer = !!req
     ? {
-        url: 'http://ingress-nginx-controller.kube-system.svc.cluster.local',
+        url: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
         headers: req.headers,
       }
-    : { url: '/', headers: '' };
+    : { url: '/', headers: '' }
 
   // REQUEST
-  return axios.create({ baseURL: isServer.url, headers: isServer.headers });
-};
+  return axios.create({ baseURL: isServer.url, headers: isServer.headers })
+}

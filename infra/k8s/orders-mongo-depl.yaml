@@ -15,7 +15,6 @@ spec:
       containers:
         - name: orders-mongo
           image: mongo
-          imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
