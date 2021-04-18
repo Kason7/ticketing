@@ -27,3 +27,11 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - run: docker push kason7/auth
+      # Get doctl from DigitalOcean and connect to it with API access token
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      # Make the cluster on DigitalOcean the default kubernetes context
+      - run: doctl kubernetes cluster kubeconfig save ticketing
+      # Restart deployment
+      - run: kubectl rollout restart deployment auth-depl
