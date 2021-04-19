@@ -26,4 +26,4 @@ jobs:
       # Make the cluster on DigitalOcean the default kubernetes context
       - run: doctl kubernetes cluster kubeconfig save ticketing
       # Apply manifests
-      - run: kubectl apply -f infra/k8s
+      - run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
