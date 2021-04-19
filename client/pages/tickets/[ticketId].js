@@ -11,10 +11,7 @@ const TicketShow = () => {
   const { ticketId } = router.query
 
   // HANDLERS
-  const { data: ticket, error } = useSWR(
-    `https://ticketing.dev/api/tickets/${ticketId}`,
-    fetcher,
-  )
+  const { data: ticket, error } = useSWR(`/api/tickets/${ticketId}`, fetcher)
 
   // HANDLERS
   const { doRequest, errors } = useRequest({
