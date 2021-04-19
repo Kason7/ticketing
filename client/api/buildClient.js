@@ -3,7 +3,7 @@ import axios from 'axios'
 export const buildClient = ({ req }) => {
   const isServer = !!req
     ? {
-        url: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+        url: 'http://www.performance-marketing.us',
         headers: req.headers,
       }
     : { url: '/', headers: '' }
