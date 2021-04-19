@@ -1,11 +1,11 @@
-name: deploy-auth
+name: deploy-orders
 
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [main]
-    paths: ['auth/**']
+    paths: ['orders/**']
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,13 +20,13 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - run: cd auth && docker build -t kason7/auth .
+      - run: cd orders && docker build -t kason7/orders .
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         # Adding secrets to environment
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push kason7/auth
+      - run: docker push kason7/orders
       # Get doctl from DigitalOcean and connect to it with API access token
       - uses: digitalocean/action-doctl@v2
         with:
@@ -34,4 +34,4 @@ jobs:
       # Make the cluster on DigitalOcean the default kubernetes context
       - run: doctl kubernetes cluster kubeconfig save ticketing
       # Restart deployment
-      - run: kubectl rollout restart deployment auth-depl
+      - run: kubectl rollout restart deployment orders-depl
