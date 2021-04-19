@@ -1,4 +1,4 @@
-name: deploy-auth
+name: deploy-manifests
 
 # Controls when the action will run. 
 on:
