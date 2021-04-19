@@ -10,7 +10,7 @@ const { PaymentCreatedListener } = require('./events/paymentCreatedListener')
 
 // CONNECT TO MONGODB
 const start = async () => {
-  console.log('Starting......')
+  console.log('Starting....')
 
   // Check if necessary environment variables exists
   if (!process.env.JWT_KEY) {
