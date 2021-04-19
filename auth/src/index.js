@@ -3,7 +3,7 @@ const app = require('./app')
 
 // CONNECT TO MONGODB
 const start = async () => {
-  console.log('Starting up...')
+  console.log('Starting up....')
 
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined')
