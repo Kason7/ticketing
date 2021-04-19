@@ -8,10 +8,7 @@ const HomePage = ({ data }) => {
   const currentUser = data?.currentUser
 
   // HANDLERS
-  const { data: tickets, error } = useSWR(
-    'https://ticketing.dev/api/tickets',
-    fetcher,
-  )
+  const { data: tickets, error } = useSWR('/api/tickets', fetcher)
 
   // RENDERS
   const ticketList = tickets?.reverse().map(({ id, title, price }) => {
