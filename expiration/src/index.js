@@ -5,7 +5,7 @@ const {
 
 // SERVICE CONFIG
 const start = async () => {
-  console.log('Starting......')
+  console.log('Starting...')
 
   // Check if necessary environment variables exists
   if (!process.env.NATS_CLUSTER_ID) {
